@@ -228,7 +228,7 @@ def main():
     client.login()
 
     end_date   = date.today()
-    start_date = end_date - timedelta(days=90)
+    start_date = date(2026, 3, 9)  # plan start date
 
     raw = client.get_activities_by_date(
         start_date.isoformat(),

@@ -715,8 +715,19 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.05em; }
 }
 
 /* ============================================================
-   13. Actuals overlay
+   13. Actuals
    ============================================================ */
+.grid-row-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  margin-top: 24px;
+}
+.grid-row-label:first-child { margin-top: 0; }
+.grid-row-label--actuals { color: #52b788; }
 .session-actual {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -810,7 +821,7 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.05em; }
       <h2 class="section__title" id="current-week-title"></h2>
       <span class="section__label" id="current-week-meta"></span>
     </div>
-    <div class="week-grid" id="week-grid"></div>
+    <div id="week-grid"></div>
   </div>
 </div>
 
@@ -1192,14 +1203,12 @@ function updateCountdown() {
 /* ============================================================
    WEEK GRID RENDERER (shared)
    ============================================================ */
-function renderWeekGrid(weekData, currentWeekIdx, weekIdx, actuals) {
+function renderWeekGrid(weekData, currentWeekIdx, weekIdx) {
   const isCurrentWeek = weekIdx === currentWeekIdx;
   const todayIdx = getTodayDayIndex();
-  const weekNum  = weekData.week;
-  const acts     = (actuals && actuals.activities) || [];
 
-  return weekData.days.map((day, dayIdx) => {
-    const isToday = isCurrentWeek && dayIdx === todayIdx;
+  return weekData.days.map((day, i) => {
+    const isToday = isCurrentWeek && i === todayIdx;
     const isOff   = day.sessions.length === 0;
 
     const classes = [
@@ -1210,17 +1219,9 @@ function renderWeekGrid(weekData, currentWeekIdx, weekIdx, actuals) {
 
     const sessionHTML = isOff
       ? '<span class="off-label">Rest</span>'
-      : day.sessions.map((s, sessIdx) => {
-          const match = acts.find(a =>
-            a.matched_week    === weekNum &&
-            a.matched_day     === dayIdx  &&
-            a.matched_session === sessIdx
-          );
-          const actualLine = match
-            ? `<div class="session-actual">\u2713 ${fmtDuration(match.duration_sec)}${match.distance_m ? ' \xb7 ' + fmtDistance(match.sport, match.distance_m) : ''}${match.pace ? ' \xb7 ' + match.pace : ''}</div>`
-            : '';
-          return `<span class="session-pill session-pill--${s.sport}">${s.desc}${actualLine}</span>`;
-        }).join('');
+      : day.sessions.map(s =>
+          `<span class="session-pill session-pill--${s.sport}">${s.desc}</span>`
+        ).join('');
 
     return `
       <div class="${classes}">
@@ -1245,6 +1246,67 @@ function fmtDistance(sport, meters) {
   return `${meters}m`;
 }
 
+const PLAN_START = new Date('2026-03-09T00:00:00');
+
+function getActualsForDate(actuals, dateStr) {
+  const all = [
+    ...(actuals.activities || []),
+    ...(actuals.unmatched  || []),
+  ].filter(a => new Date(a.date + 'T00:00:00') >= PLAN_START);
+  return all.filter(a => a.date === dateStr);
+}
+
+function renderActualsGrid(weekData, actuals) {
+  const today     = new Date();
+  today.setHours(0, 0, 0, 0);
+  const weekStart = new Date(weekData.startDate + 'T00:00:00');
+  const todayIdx  = getTodayDayIndex();
+  const isCurrentWeek = weekData.startDate === WEEKS[getCurrentWeekIndex()].startDate;
+
+  return weekData.days.map((day, i) => {
+    const dayDate = new Date(weekStart);
+    dayDate.setDate(weekStart.getDate() + i);
+    dayDate.setHours(0, 0, 0, 0);
+
+    const isFuture = dayDate > today;
+    const isToday  = isCurrentWeek && i === todayIdx;
+
+    if (isFuture) {
+      return `
+        <div class="day-card day-card--off">
+          <div class="day-card__name">${day.day}</div>
+          <span class="off-label">—</span>
+        </div>`;
+    }
+
+    const dateStr = [
+      dayDate.getFullYear(),
+      String(dayDate.getMonth() + 1).padStart(2, '0'),
+      String(dayDate.getDate()).padStart(2, '0'),
+    ].join('-');
+
+    const dayActs = getActualsForDate(actuals, dateStr);
+    const classes = ['day-card', isToday ? 'day-card--today' : ''].filter(Boolean).join(' ');
+
+    const sessionHTML = dayActs.length === 0
+      ? '<span class="off-label">—</span>'
+      : dayActs.map(a => {
+          const knownSports = ['swim', 'bike', 'run', 'race'];
+          const sc = knownSports.includes(a.sport) ? a.sport : 'run';
+          const parts = [fmtDuration(a.duration_sec)];
+          if (a.distance_m) parts.push(fmtDistance(a.sport, a.distance_m));
+          if (a.pace) parts.push(a.pace);
+          return `<span class="session-pill session-pill--${sc}">\u2713 ${parts.join(' \xb7 ')}</span>`;
+        }).join('');
+
+    return `
+      <div class="${classes}">
+        <div class="day-card__name">${day.day}</div>
+        ${sessionHTML}
+      </div>`;
+  }).join('');
+}
+
 /* ============================================================
    RENDER: Current Week
    ============================================================ */
@@ -1252,15 +1314,19 @@ function renderCurrentWeek(currentIdx, actuals) {
   const w = WEEKS[currentIdx];
   document.getElementById('current-week-title').textContent = `Current Week: Week ${w.week}; ${w.label}`;
   document.getElementById('current-week-meta').textContent  = `${w.dateRange} · ${w.hours} hrs`;
-  document.getElementById('week-grid').innerHTML = renderWeekGrid(w, currentIdx, currentIdx, actuals);
+  document.getElementById('week-grid').innerHTML = `
+    <div class="grid-row-label">Plan</div>
+    <div class="week-grid">${renderWeekGrid(w, currentIdx, currentIdx)}</div>
+    <div class="grid-row-label grid-row-label--actuals">Actuals</div>
+    <div class="week-grid">${renderActualsGrid(w, actuals)}</div>
+  `;
 }
 
 /* ============================================================
    RENDER: Hours Chart
    ============================================================ */
-function renderHoursChart(currentIdx, actuals) {
+function renderHoursChart(currentIdx) {
   const maxHours = 14;
-  const acts = (actuals && actuals.activities) || [];
 
   const phaseGroups = [];
   let curPhase = null, groupStart = 0;
@@ -1292,33 +1358,15 @@ function renderHoursChart(currentIdx, actuals) {
     const swimS = w.days.reduce((n, d) => n + d.sessions.filter(s => s.sport === 'swim').length, 0);
     const bikeS = w.days.reduce((n, d) => n + d.sessions.filter(s => s.sport === 'bike').length, 0);
     const runS  = w.days.reduce((n, d) => n + d.sessions.filter(s => s.sport === 'run').length, 0);
-
-    // Compute actual hours from matched activities for this week
-    const weekActs = acts.filter(a => a.matched_week === w.week);
-    const actualHrs = weekActs.reduce((sum, a) => sum + a.duration_sec / 3600, 0);
-    const hasActuals = weekActs.length > 0;
-    const actualPct = Math.min(actualHrs / maxHours * 100, totalH);
-    const actualOverflow = actualHrs / maxHours * 100 > totalH;
-
-    const checkBadge = hasActuals ? `<span class="chart-col-check">\u2713</span>` : '';
-    const overlayStyle = hasActuals
-      ? `background:${actualOverflow ? 'rgba(82,183,136,0.25)' : 'rgba(255,255,255,0.12)'};border-top:1px solid ${actualOverflow ? 'rgba(82,183,136,0.6)' : 'rgba(255,255,255,0.25)'};`
-      : '';
-    const overlayHTML = hasActuals
-      ? `<div class="chart-actual-overlay" style="height:${actualPct.toFixed(1)}%;${overlayStyle}"></div>`
-      : '';
-
-    const tip = `W${w.week} · ${w.label} · ${w.hours}h total|Swim: ${w.swimHrs}h · ${swimS} session${swimS !== 1 ? 's' : ''}|Bike: ${w.bikeHrs}h · ${bikeS} session${bikeS !== 1 ? 's' : ''}|Run: ${w.runHrs}h · ${runS} session${runS !== 1 ? 's' : ''}${hasActuals ? `|Actual: ${actualHrs.toFixed(1)}h logged` : ''}`;
+    const tip = `W${w.week} · ${w.label} · ${w.hours}h total|Swim: ${w.swimHrs}h · ${swimS} session${swimS !== 1 ? 's' : ''}|Bike: ${w.bikeHrs}h · ${bikeS} session${bikeS !== 1 ? 's' : ''}|Run: ${w.runHrs}h · ${runS} session${runS !== 1 ? 's' : ''}`;
 
     return `
-      <div class="chart-col" style="height:100%;position:relative;" data-tip="${tip}" onclick="scrollToWeek(${i})" onmouseenter="showTip(this)" onmouseleave="hideTip()">
-        ${checkBadge}
+      <div class="chart-col" style="height:100%;" data-tip="${tip}" onclick="scrollToWeek(${i})" onmouseenter="showTip(this)" onmouseleave="hideTip()">
         <span class="chart-week-label">W${w.week}</span>
         <div class="${wrapClass}" style="height:${totalH.toFixed(1)}%;">
           <div class="chart-segment chart-segment--run"  style="height:${runH}%;"></div>
           <div class="chart-segment chart-segment--bike" style="height:${bikeH}%;"></div>
           <div class="chart-segment chart-segment--swim" style="height:${swimH}%;"></div>
-          ${overlayHTML}
         </div>
         <span class="chart-hours-label">${w.hours}h</span>
       </div>`;
@@ -1340,31 +1388,23 @@ function renderHoursChart(currentIdx, actuals) {
    RENDER: Accordion
    ============================================================ */
 function renderAccordion(currentIdx, actuals) {
-  const lo   = Math.max(0, currentIdx - 1);
-  const hi   = Math.min(WEEKS.length - 1, currentIdx + 1);
-  const acts = (actuals && actuals.activities) || [];
+  const lo    = Math.max(0, currentIdx - 1);
+  const hi    = Math.min(WEEKS.length - 1, currentIdx + 1);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   document.getElementById('accordion').innerHTML = WEEKS.map((w, i) => {
-    const isCurrent = i === currentIdx;
-    const color     = PHASE_COLORS[w.phase];
-    const expanded  = (i >= lo && i <= hi) ? 'expanded' : '';
+    const isCurrent    = i === currentIdx;
+    const color        = PHASE_COLORS[w.phase];
+    const expanded     = (i >= lo && i <= hi) ? 'expanded' : '';
+    const weekStarted  = new Date(w.startDate + 'T00:00:00') <= today;
 
-    // Compute per-sport actual hours for this week
-    const weekActs = acts.filter(a => a.matched_week === w.week);
-    const actSwimHrs = weekActs.filter(a => a.sport === 'swim').reduce((s, a) => s + a.duration_sec / 3600, 0);
-    const actBikeHrs = weekActs.filter(a => a.sport === 'bike').reduce((s, a) => s + a.duration_sec / 3600, 0);
-    const actRunHrs  = weekActs.filter(a => a.sport === 'run' ).reduce((s, a) => s + a.duration_sec / 3600, 0);
-    const hasActuals = weekActs.length > 0;
-
-    const swimChip = hasActuals && actSwimHrs > 0
-      ? `<span class="sport-chip sport-chip--swim">${actSwimHrs.toFixed(1)}h/${w.swimHrs}h</span>`
-      : `<span class="sport-chip sport-chip--swim">${w.swimHrs}h</span>`;
-    const bikeChip = hasActuals && actBikeHrs > 0
-      ? `<span class="sport-chip sport-chip--bike">${actBikeHrs.toFixed(1)}h/${w.bikeHrs}h</span>`
-      : `<span class="sport-chip sport-chip--bike">${w.bikeHrs}h</span>`;
-    const runChip  = hasActuals && actRunHrs > 0
-      ? `<span class="sport-chip sport-chip--run">${actRunHrs.toFixed(1)}h/${w.runHrs}h</span>`
-      : `<span class="sport-chip sport-chip--run">${w.runHrs}h</span>`;
+    const content = weekStarted
+      ? `<div class="grid-row-label">Plan</div>
+         <div class="week-grid">${renderWeekGrid(w, currentIdx, i)}</div>
+         <div class="grid-row-label grid-row-label--actuals">Actuals</div>
+         <div class="week-grid">${renderActualsGrid(w, actuals)}</div>`
+      : `<div class="week-grid">${renderWeekGrid(w, currentIdx, i)}</div>`;
 
     return `
       <div class="accordion-item ${isCurrent ? 'accordion-item--current' : ''} ${expanded}" data-week="${i}">
@@ -1375,18 +1415,16 @@ function renderAccordion(currentIdx, actuals) {
             <div class="accordion-dates mono">${w.dateRange}</div>
           </div>
           <div class="accordion-sport-strip">
-            ${swimChip}
-            ${bikeChip}
-            ${runChip}
+            <span class="sport-chip sport-chip--swim">${w.swimHrs}h</span>
+            <span class="sport-chip sport-chip--bike">${w.bikeHrs}h</span>
+            <span class="sport-chip sport-chip--run">${w.runHrs}h</span>
           </div>
           <span class="accordion-badge" style="background:${hexAlpha(color,0.12)};color:${color};border-color:${hexAlpha(color,0.35)};">${w.phase}</span>
           <span class="accordion-hours mono">${w.hours}h</span>
           <span class="accordion-chevron">▼</span>
         </div>
         <div class="accordion-body">
-          <div class="accordion-content">
-            <div class="week-grid">${renderWeekGrid(w, currentIdx, i, actuals)}</div>
-          </div>
+          <div class="accordion-content">${content}</div>
         </div>
       </div>`;
   }).join('');
@@ -1520,27 +1558,6 @@ function initNav() {
 }
 
 /* ============================================================
-   RENDER: Unmatched activities strip
-   ============================================================ */
-function renderUnmatched(actuals) {
-  const unmatched = (actuals && actuals.unmatched) || [];
-  if (unmatched.length === 0) return;
-
-  const chips = unmatched.map(a => {
-    const d = a.date ? new Date(a.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
-    const dur = a.duration_sec ? fmtDuration(a.duration_sec) : '';
-    return `<span class="unmatched-chip">${a.sport} ${d}${dur ? ' \xb7 ' + dur : ''}</span>`;
-  }).join('');
-
-  const strip = document.createElement('div');
-  strip.className = 'unmatched-strip';
-  strip.innerHTML = `<span>${unmatched.length} unmatched activit${unmatched.length === 1 ? 'y' : 'ies'}</span>${chips}`;
-
-  const chart = document.getElementById('phase-track');
-  if (chart) chart.appendChild(strip);
-}
-
-/* ============================================================
    INIT
    ============================================================ */
 async function init() {
@@ -1562,9 +1579,8 @@ async function init() {
   } catch (_) {}
 
   renderCurrentWeek(currentIdx, actuals);
-  renderHoursChart(currentIdx, actuals);
+  renderHoursChart(currentIdx);
   renderAccordion(currentIdx, actuals);
-  renderUnmatched(actuals);
   renderZones();
   renderRacePlan();
   initNav();
