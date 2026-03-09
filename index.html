@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IM 70.3 Western Mass — Training Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   1. Custom Properties
+   ============================================================ */
+:root {
+  --bg: #0f0f0f;
+  --surface: #161616;
+  --surface-2: #1e1e1e;
+  --border: #2a2a2a;
+  --text: #e0e0e0;
+  --text-muted: #777;
+  --accent: #e85d04;
+
+  --swim: #0096c7;
+  --bike: #f4a261;
+  --run: #52b788;
+
+  --phase-build: #e85d04;
+  --phase-recovery: #52b788;
+  --phase-peak: #c77dff;
+  --phase-taper: #f4a261;
+  --phase-race: #ef233c;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-prose: 'Lora', serif;
+
+  --radius: 8px;
+  --nav-h: 52px;
+}
+
+/* ============================================================
+   2. Reset
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-prose); line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   3. Base Typography
+   ============================================================ */
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.05em; }
+.mono { font-family: var(--font-mono); }
+
+/* ============================================================
+   4. Layout
+   ============================================================ */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 72px 24px;
+}
+.section__header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section__title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  letter-spacing: 0.08em;
+}.section__label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ============================================================
+   5. Hero
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,93,4,0.125) 0%, transparent 66.4%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.018) 79px, rgba(255,255,255,0.018) 80px),
+    repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.018) 79px, rgba(255,255,255,0.018) 80px);
+  pointer-events: none;
+}
+.hero__badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(232,93,4,0.5);
+  padding: 4px 14px;
+  border-radius: 2px;
+  margin-bottom: 28px;
+  position: relative;
+}
+.hero__race-name {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: 12px;
+  position: relative;
+}
+.hero__athlete {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 56px;
+  position: relative;
+}
+.hero__countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 48px;
+  position: relative;
+}
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px;
+}
+.countdown-unit + .countdown-unit {
+  border-left: 1px solid var(--border);
+}
+.countdown-unit__value {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  line-height: 1;
+  color: var(--accent);
+  min-width: 110px;
+  text-align: center;
+}
+.countdown-unit__label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+.hero__date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.18em;
+  position: relative;
+}
+.hero__scroll {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.9; transform: translateX(-50%) translateY(4px); }
+}
+
+/* ============================================================
+   6. Sticky Nav
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  background: rgba(15,15,15,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.nav__link {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav__link:hover { color: var(--text); }
+.nav__link.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ============================================================
+   7. Week Grid
+   ============================================================ */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 10px;
+  min-height: 100px;
+  transition: border-color 0.2s;
+}
+.day-card--today {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 24px rgba(232,93,4,0.12);
+}
+.day-card--off {
+  opacity: 0.35;
+}
+.day-card__name {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.day-card--today .day-card__name { color: var(--accent); }
+.session-pill {
+  display: block;
+  border-radius: 3px;
+  padding: 5px 9px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.session-pill--swim   { background: rgba(0,150,199,0.18);   border-left: 2px solid #0096c7; color: #7ad4f0; }
+.session-pill--bike   { background: rgba(244,162,97,0.18);  border-left: 2px solid #f4a261; color: #f4c99a; }
+.session-pill--run    { background: rgba(82,183,136,0.18);  border-left: 2px solid #52b788; color: #8ed5b0; }
+.session-pill--race   { background: rgba(239,35,60,0.20);   border-left: 2px solid #ef233c; color: #ff8896; font-weight: 500; letter-spacing: 0.04em; }
+.off-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   8. Hours Chart
+   ============================================================ */
+.hours-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 220px;
+}
+.chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+.chart-hours-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text);
+  margin-top: 5px;
+  white-space: nowrap;
+}
+.chart-bar-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.chart-bar-wrap--current {
+  box-shadow: 0 0 12px rgba(232,93,4,0.6);
+}
+.chart-bar-wrap--past {
+  opacity: 0.35;
+}
+.chart-segment {
+  width: 100%;
+  min-height: 1px;
+}
+.chart-segment--swim { background: #0096c7; }
+.chart-segment--bike { background: #f4a261; }
+.chart-segment--run  { background: #52b788; }
+.chart-week-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+.chart-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+.chart-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.chart-col { cursor: pointer; }
+.chart-col:hover .chart-bar-wrap { filter: brightness(1.18); }
+.chart-phase-row {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.chart-phase-cell {
+  height: 20px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  overflow: hidden;
+}
+.chart-phase-label {
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#chart-tooltip {
+  position: fixed;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 200;
+  line-height: 1.7;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+#chart-tooltip.visible { opacity: 1; }
+.collapsible-content {
+  max-height: 5000px;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+}
+.collapsible-content.collapsed { max-height: 0; }
+.section-toggle {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  padding: 3px 11px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  transition: color 0.2s, border-color 0.2s;
+}
+.section-toggle:hover { color: var(--text); border-color: var(--text-muted); }
+
+/* ============================================================
+   9. Accordion
+   ============================================================ */
+.accordion-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+.accordion-item--current { border-color: rgba(232,93,4,0.5); }
+.accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 20px;
+  cursor: pointer;
+  background: var(--surface);
+  user-select: none;
+  transition: background 0.2s;
+}
+.accordion-header:hover { background: var(--surface-2); }
+.accordion-item--current .accordion-header { background: rgba(232,93,4,0.06); }
+.accordion-week-num {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--text-muted);
+  min-width: 32px;
+}
+.accordion-item--current .accordion-week-num { color: var(--accent); }
+.accordion-meta { flex: 1; }
+.accordion-label {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+}
+.accordion-dates {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.accordion-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.accordion-hours {
+  font-family: var(--font-mono);
+  font-size: 1.0rem;
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.accordion-chevron {
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  transition: transform 0.3s ease;
+}
+.accordion-item.expanded .accordion-chevron { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.42s ease;
+}
+.accordion-item.expanded .accordion-body { max-height: 1400px; }
+.accordion-content {
+  padding: 16px 20px 20px;
+  background: var(--bg);
+}
+
+/* ============================================================
+   9b. Sport Strip (accordion header)
+   ============================================================ */
+.accordion-sport-strip { display: flex; gap: 6px; align-items: center; }
+.sport-chip {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+.sport-chip--swim { background: rgba(0,150,199,0.15); color: #7ad4f0; }
+.sport-chip--bike { background: rgba(244,162,97,0.15); color: #f4c99a; }
+.sport-chip--run  { background: rgba(82,183,136,0.15); color: #8ed5b0; }
+
+/* ============================================================
+   10. Zone Cards
+   ============================================================ */
+.zones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.zone-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.zone-card__header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sport-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.zone-card__sport {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+}
+.zone-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.zone-table th {
+  padding: 9px 18px;
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.zone-table td {
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(42,42,42,0.6);
+  color: var(--text);
+  vertical-align: top;
+}
+.zone-table tr:last-child td { border-bottom: none; }
+.zone-table tr.race-row td { color: var(--accent); }
+
+/* ============================================================
+   11. Race Plan
+   ============================================================ */
+.race-splits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.split-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.split-card__header {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.split-card__sport {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+}
+.split-card__body { padding: 4px 0 12px; }
+.split-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 7px 20px;
+  border-bottom: 1px solid rgba(42,42,42,0.5);
+}
+.split-row:last-child { border-bottom: none; }
+.split-row__key {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+.split-row__val {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text);
+  text-align: right;
+  line-height: 1.4;
+}
+.finish-box {
+  background: var(--surface);
+  border: 1px solid rgba(232,93,4,0.45);
+  border-radius: var(--radius);
+  padding: 36px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.finish-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,93,4,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.finish-box__label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  position: relative;
+}
+.finish-box__time {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  position: relative;
+}
+.finish-box__breakdown {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 14px;
+  position: relative;
+}
+.nutrition-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+}
+.nutrition-box__title {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.nutrition-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  list-style: none;
+}
+.nutrition-list li {
+  font-family: var(--font-prose);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding-left: 12px;
+  border-left: 2px solid var(--accent);
+  line-height: 1.55;
+}
+.nutrition-list li strong {
+  color: var(--text);
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+/* ============================================================
+   12. Responsive
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero__countdown { gap: 0; }
+  .countdown-unit { padding: 0 10px; }
+  .countdown-unit__value { font-size: 2.5rem; min-width: auto; }
+  .week-grid { grid-template-columns: 1fr; }
+  .day-card { min-height: auto; display: flex; align-items: flex-start; gap: 10px; }
+  .day-card__name { min-width: 32px; margin-bottom: 0; flex-shrink: 0; padding-top: 1px; }
+  .zones-grid { grid-template-columns: 1fr; }
+  .race-splits { grid-template-columns: 1fr; }
+  .nutrition-list { grid-template-columns: 1fr; }
+  .nav__inner { gap: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .nav__link { padding: 0 14px; font-size: 0.65rem; }
+  .accordion-badge { display: none; }
+  .section { padding: 40px 16px; }
+}
+
+/* ============================================================
+   13. Actuals overlay
+   ============================================================ */
+.session-actual {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: #52b788;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+.chart-actual-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(255,255,255,0.12);
+  border-top: 1px solid rgba(255,255,255,0.25);
+  pointer-events: none;
+}
+.chart-col-check {
+  font-size: 0.55rem;
+  color: #52b788;
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.unmatched-strip {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.unmatched-chip {
+  background: rgba(244,162,97,0.1);
+  color: #f4c99a;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero" class="hero">
+  <div class="hero__badge">Ironman Western Massachusetts 70.3</div>
+  <h1 class="hero__race-name">Training Plan</h1>
+  <p class="hero__athlete">Adam Vanderpool</p>
+  <div class="hero__countdown">
+    <div class="countdown-unit">
+      <span class="countdown-unit__value" id="cd-days">--</span>
+      <span class="countdown-unit__label">Days</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-unit__value" id="cd-hours">--</span>
+      <span class="countdown-unit__label">Hours</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-unit__value" id="cd-minutes">--</span>
+      <span class="countdown-unit__label">Minutes</span>
+    </div>
+    <div class="countdown-unit">
+      <span class="countdown-unit__value" id="cd-seconds">--</span>
+      <span class="countdown-unit__label">Seconds</span>
+    </div>
+  </div>
+  <p class="hero__date">Westfield, MA &middot; Sunday &middot; June 7, 2026 &middot; 07:00 Start</p>
+  <span class="hero__scroll">scroll ↓</span>
+</section>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#week"         class="nav__link" data-section="week">Current Week</a>
+    <a href="#plan"         class="nav__link" data-section="plan">The Plan</a>
+    <a href="#week-details" class="nav__link" data-section="week-details">Week Details</a>
+    <a href="#zones"        class="nav__link" data-section="zones">Training Zones</a>
+    <a href="#raceday"      class="nav__link" data-section="raceday">Race Day</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     CURRENT WEEK
+     ============================================================ -->
+<div id="week">
+  <div class="section">
+    <div class="section__header">
+      <h2 class="section__title" id="current-week-title"></h2>
+      <span class="section__label" id="current-week-meta"></span>
+    </div>
+    <div class="week-grid" id="week-grid"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PLAN (Phase Map + Accordion)
+     ============================================================ -->
+<div id="plan">
+  <div class="section">
+    <div class="section__header">
+      <h2 class="section__title">The Plan</h2>
+      <span class="section__label">129.5 hrs total training</span>
+    </div>
+    <div class="phase-track" id="phase-track"></div>
+
+    <div id="week-details" style="margin-top: 52px;">
+      <div class="section__header" style="margin-bottom: 16px;">
+        <h2 class="section__title">Week Details</h2>
+        <span class="section__label">Click to expand</span>
+      </div>
+      <div id="accordion"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ZONES
+     ============================================================ -->
+<div id="zones">
+  <div class="section">
+    <div class="section__header">
+      <h2 class="section__title">Training Zones</h2>
+      <span class="section__label">HR &middot; Pace &middot; Targets</span>
+      <button class="section-toggle" onclick="toggleSection('zones-body', this)">▲ Collapse</button>
+    </div>
+    <div id="zones-body" class="collapsible-content">
+      <div class="zones-grid" id="zones-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     RACE DAY
+     ============================================================ -->
+<div id="raceday">
+  <div class="section">
+    <div class="section__header">
+      <h2 class="section__title">Race Day Plan</h2>
+      <span class="section__label">June 7, 2026 &middot; Western Massachusetts</span>
+      <button class="section-toggle" onclick="toggleSection('raceday-body', this)">▲ Collapse</button>
+    </div>
+    <div id="raceday-body" class="collapsible-content">
+      <div id="race-plan-content"></div>
+    </div>
+  </div>
+</div>
+
+<div id="chart-tooltip"></div>
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+const PHASE_COLORS = {
+  build:    '#e85d04',
+  recovery: '#52b788',
+  peak:     '#c77dff',
+  taper:    '#f4a261',
+  race:     '#ef233c',
+};
+
+const SPORT_COLORS = {
+  swim: '#0096c7',
+  bike: '#f4a261',
+  run:  '#52b788',
+  race: '#ef233c',
+};
+
+const WEEKS = [
+  {
+    week: 1, label: 'Build 1', phase: 'build', hours: 8.5, swimHrs: 1.5, bikeHrs: 3.8, runHrs: 3.2,
+    dateRange: 'Mar 9–15', startDate: '2026-03-09',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '1,500m: 300m warmup + drills → 4×200m Z2 (20s rest) → 300m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '1:30 Z2 (HR 132–145)' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (Z2)' }] },
+      { day: 'Thu', sessions: [{ sport: 'run',  desc: '50 min easy Z2 (HR <151)' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'swim', desc: '1,800m: warmup → 5×200m Z2 (20s rest) → 300m cooldown' }] },
+      { day: 'Sun', sessions: [{ sport: 'bike', desc: '2:00 easy Z2' }, { sport: 'run', desc: '15 min easy brick run' }] },
+    ],
+  },
+  {
+    week: 2, label: 'Build 2', phase: 'build', hours: 9.5, swimHrs: 1.8, bikeHrs: 4.2, runHrs: 3.5,
+    dateRange: 'Mar 16–22', startDate: '2026-03-16',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '1,800m: warmup + drills → 6×200m Z2 (20s rest) → 200m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '1:30 with 2×15 min tempo (HR 148–152), 5 min easy between' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (Z2)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '1,600m aerobic: 200m warmup → 4×300m Z2 (30s rest) → 100m cooldown' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '2:30 Z2' }, { sport: 'run', desc: '20 min easy brick run' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '1:10 easy' }] },
+    ],
+  },
+  {
+    week: 3, label: 'Build 3', phase: 'build', hours: 10.5, swimHrs: 1.9, bikeHrs: 4.8, runHrs: 3.8,
+    dateRange: 'Mar 23–29', startDate: '2026-03-23',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '2,000m: 300m warmup → 4×400m Z2 (30s rest) → 200m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '1:45 with 3×12 min sweet spot (HR 148–152), 4 min easy between' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (Z2)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '1,800m threshold: 300m warmup → 6×150m at CSS pace (20s rest) → 300m cooldown' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '3:00 Z2' }, { sport: 'run', desc: '25 min easy brick run' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '1:20 easy' }] },
+    ],
+  },
+  {
+    week: 4, label: 'Recovery', phase: 'recovery', hours: 7.0, swimHrs: 1.2, bikeHrs: 2.8, runHrs: 3.0,
+    dateRange: 'Mar 30–Apr 5', startDate: '2026-03-30',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '1,200m easy — all Z2' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '1:00 easy Z2' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (easy)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '1,200m easy' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '1:45 easy Z2' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '50 min easy' }] },
+    ],
+  },
+  {
+    week: 5, label: 'Build 4', phase: 'build', hours: 11.0, swimHrs: 2.2, bikeHrs: 5.3, runHrs: 3.5,
+    dateRange: 'Apr 6–12', startDate: '2026-04-06',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '2,200m: 300m warmup → 3×600m Z2 (30s rest) → 300m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '2:00 with 2×20 min sweet spot (HR 148–152), 8 min easy between' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (Z2)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '2,000m threshold: 400m warmup → 5×200m at CSS (25s rest) → 400m cooldown' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '3:30 Z2' }, { sport: 'run', desc: '30 min brick (last 10 min at 9:15/mi)' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '1:30 easy' }] },
+    ],
+  },
+  {
+    week: 6, label: 'Build 5', phase: 'build', hours: 12.0, swimHrs: 2.2, bikeHrs: 6.3, runHrs: 3.5,
+    dateRange: 'Apr 13–19', startDate: '2026-04-13',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '2,200m: warmup → 4×400m (300m Z2 + 100m CSS, 30s rest) → 200m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '1:45 tempo (3×12 min HR 150–155, 5 min easy)' }, { sport: 'run', desc: '20 min easy run off bike' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (Z2)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '2,000m aerobic: 200m warmup → 4×400m Z2 (30s rest) → 200m cooldown' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '4:00 Z2' }, { sport: 'run', desc: '30 min brick at race pace (9:15/mi)' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '1:45 easy' }] },
+    ],
+  },
+  {
+    week: 7, label: 'Build 6', phase: 'build', hours: 13.0, swimHrs: 2.5, bikeHrs: 6.8, runHrs: 3.7,
+    dateRange: 'Apr 20–26', startDate: '2026-04-20',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '2,500m: warmup → 1,900m continuous at race pace (2:03–2:08/100m) → cooldown — first race distance!' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '2:00 with 3×15 min sweet spot (HR 148–152), 5 min easy between' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (Z2)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '2,000m quality: 300m warmup → 5×300m at CSS (30s rest) → 200m cooldown' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '4:30 Z2' }, { sport: 'run', desc: '35 min brick (last 20 min at race pace)' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '1:50 easy' }] },
+    ],
+  },
+  {
+    week: 8, label: 'Recovery', phase: 'recovery', hours: 8.5, swimHrs: 1.5, bikeHrs: 3.3, runHrs: 3.7,
+    dateRange: 'Apr 27–May 3', startDate: '2026-04-27',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '1,500m easy aerobic' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '1:15 easy Z2' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (easy)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '1,500m easy aerobic' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '2:00 easy Z2' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '1:00 easy' }] },
+    ],
+  },
+  {
+    week: 9, label: 'Peak 1', phase: 'peak', hours: 13.0, swimHrs: 2.5, bikeHrs: 6.5, runHrs: 4.0,
+    dateRange: 'May 4–10', startDate: '2026-05-04',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '2,500m: 300m warmup → 3×600m at CSS (45s rest) → 400m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '2:00 threshold: 3×10 min at HR 153–158 (5 min easy between)' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run Z2 (last full social run)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '2,000m' }, { sport: 'run', desc: '30 min easy run (swim-run brick)' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '4:30' }, { sport: 'run', desc: '40 min brick at race pace (9:15/mi)' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '2:00 easy' }] },
+    ],
+  },
+  {
+    week: 10, label: 'Peak 2', phase: 'peak', hours: 14.0, swimHrs: 2.5, bikeHrs: 7.0, runHrs: 4.5,
+    dateRange: 'May 11–17', startDate: '2026-05-11',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '2,500m: 300m warmup → 4×400m at CSS (60s rest) → 300m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '2:30 with 20 min at race effort (HR 130–140) mid-ride' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run (Z2)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '2,000m aerobic' }, { sport: 'run', desc: '30 min easy run' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '5:00 (~56 mi at race effort)' }, { sport: 'run', desc: '40 min brick at race pace' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '2:00 easy' }] },
+    ],
+  },
+  {
+    week: 11, label: 'Peak 3', phase: 'peak', hours: 12.0, swimHrs: 2.5, bikeHrs: 6.2, runHrs: 3.3,
+    dateRange: 'May 18–24', startDate: '2026-05-18',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '2,500m: 300m warmup → 4×400m at CSS (45s rest) → 500m cooldown' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '2:00 with 3×12 min at race effort (HR 130–140), 5 min easy between' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '1:00 social run Z2 (last social run)' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '2,000m' }, { sport: 'run', desc: '30 min easy run off the swim' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '4:00' }, { sport: 'run', desc: '35 min brick at race pace (9:15/mi)' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '1:45 easy' }] },
+    ],
+  },
+  {
+    week: 12, label: 'Taper', phase: 'taper', hours: 7.0, swimHrs: 1.3, bikeHrs: 2.5, runHrs: 3.2,
+    dateRange: 'May 25–31', startDate: '2026-05-25',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'swim', desc: '1,500m: 400m warmup → 4×100m at race pace (20s rest) → 700m easy' }] },
+      { day: 'Tue', sessions: [{ sport: 'bike', desc: '1:00 easy with 2×5 min at race effort' }] },
+      { day: 'Wed', sessions: [{ sport: 'run',  desc: '30 min easy solo run' }] },
+      { day: 'Thu', sessions: [{ sport: 'swim', desc: '1,000m easy' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'bike', desc: '1:30 easy Z2' }] },
+      { day: 'Sun', sessions: [{ sport: 'run',  desc: '40 min easy' }] },
+    ],
+  },
+  {
+    week: 13, label: 'Race Week', phase: 'race', hours: 3, swimHrs: 0.5, bikeHrs: 0.5, runHrs: 2.0,
+    dateRange: 'Jun 1–7', startDate: '2026-06-01',
+    days: [
+      { day: 'Mon', sessions: [{ sport: 'run',  desc: '25 min easy run' }] },
+      { day: 'Tue', sessions: [{ sport: 'swim', desc: '800m easy (open water if accessible)' }] },
+      { day: 'Wed', sessions: [{ sport: 'bike', desc: '30 min easy' }] },
+      { day: 'Thu', sessions: [{ sport: 'run',  desc: '15 min easy jog + finalize gear checklist' }] },
+      { day: 'Fri', sessions: [] },
+      { day: 'Sat', sessions: [{ sport: 'swim', desc: '5 min course preview swim + 10 min easy walk/jog' }] },
+      { day: 'Sun', sessions: [{ sport: 'race', desc: 'RACE DAY — June 7, 2026 — 07:00 Start' }] },
+    ],
+  },
+];
+
+const ZONES = {
+  swim: {
+    color: '#0096c7',
+    cols: ['Zone', 'Pace / 100m'],
+    rows: [
+      { zone: 'Easy / Z2',       pace: '2:08–2:15 /100m' },
+      { zone: 'Tempo / Z3',      pace: '2:03–2:06 /100m' },
+      { zone: 'Threshold / CSS', pace: '~1:58 /100m' },
+      { zone: 'Race Target',     pace: '2:03–2:08 /100m', isRace: true },
+    ],
+  },
+  bike: {
+    color: '#f4a261',
+    cols: ['Zone', 'Heart Rate'],
+    rows: [
+      { zone: 'Easy / Z2',   hr: '132–145 bpm' },
+      { zone: 'Tempo / Z3',  hr: '147–152 bpm' },
+      { zone: 'Threshold',   hr: '153–161 bpm' },
+      { zone: 'Race Target', hr: '130–140 bpm', isRace: true },
+    ],
+  },
+  run: {
+    color: '#52b788',
+    cols: ['Zone', 'Pace / mi', 'Heart Rate'],
+    rows: [
+      { zone: 'Easy / Z2',   pace: '10:05–10:35', hr: '<151 bpm' },
+      { zone: 'Tempo / Z3',  pace: '—',           hr: '153–158 bpm' },
+      { zone: 'Threshold',   pace: '8:20–8:25',   hr: '160–170 bpm' },
+      { zone: 'Race Target', pace: '9:15',         hr: '—', isRace: true },
+    ],
+  },
+};
+
+const RACE_PLAN = {
+  splits: [
+    {
+      sport: 'swim', label: 'Swim', color: '#0096c7',
+      rows: [
+        { key: 'Distance',    val: '1.2 mi / 1,930m' },
+        { key: 'Target',      val: '2:03–2:08 /100m' },
+        { key: 'Strategy',    val: 'Start outside/back · easy first 200m · minimal kick' },
+        { key: 'Expected',    val: '42–46 min' },
+      ],
+    },
+    {
+      sport: 'bike', label: 'Bike', color: '#f4a261',
+      rows: [
+        { key: 'Distance',  val: '56 mi' },
+        { key: 'Target HR', val: '130–140 bpm' },
+        { key: 'Strategy',  val: 'First 20 min: ride 5–10 bpm below target · eat at mi 5 then every 20–25 min' },
+        { key: 'Nutrition', val: '1 gel / 25 min · 500–700 ml fluid / hr' },
+        { key: 'Expected',  val: '3:35–3:45' },
+      ],
+    },
+    {
+      sport: 'run', label: 'Run', color: '#52b788',
+      rows: [
+        { key: 'Distance',  val: '13.1 mi' },
+        { key: 'Target',    val: '9:15 / mi' },
+        { key: 'Strategy',  val: 'First 2 km will feel strange — normal · push final 5 km if feeling good' },
+        { key: 'Nutrition', val: 'Gel + water at alternating aid stations · cola in the back half' },
+        { key: 'Expected',  val: '2:00–2:10' },
+      ],
+    },
+  ],
+  finish: {
+    display:    '6:30 – 7:00',
+    breakdown:  'Swim ~44 min · T1 ~3 min · Bike ~3:40 · T2 ~2 min · Run ~2:05',
+  },
+  nutrition: [
+    { label: 'Pre-race (2.5 hrs before)', text: '100–150g carbs — oatmeal + banana + toast' },
+    { label: 'Bike',                       text: '1 gel every 25 min · 500–700 ml/hr · start eating at mile 5' },
+    { label: 'Run',                        text: 'Gel + water at alternating aid stations · cola in the back half' },
+  ],
+};
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function getCurrentWeekIndex() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  for (let i = 0; i < WEEKS.length; i++) {
+    const start = new Date(WEEKS[i].startDate);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+    if (today >= start && today <= end) return i;
+  }
+  return today < new Date(WEEKS[0].startDate) ? 0 : WEEKS.length - 1;
+}
+
+function getTodayDayIndex() {
+  return (new Date().getDay() + 6) % 7; // Mon=0 … Sun=6
+}
+
+function pad(n) {
+  return String(n).padStart(2, '0');
+}
+
+function hexAlpha(hex, a) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+/* ============================================================
+   COUNTDOWN
+   ============================================================ */
+const RACE_DATE = new Date('2026-06-07T07:00:00');
+
+function updateCountdown() {
+  const diff = RACE_DATE - new Date();
+  if (diff <= 0) {
+    ['days', 'hours', 'minutes', 'seconds'].forEach(u =>
+      document.getElementById('cd-' + u).textContent = '00'
+    );
+    return;
+  }
+  const days    = Math.floor(diff / 86400000);
+  const hours   = Math.floor((diff % 86400000) / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent    = days;
+  document.getElementById('cd-hours').textContent   = pad(hours);
+  document.getElementById('cd-minutes').textContent = pad(minutes);
+  document.getElementById('cd-seconds').textContent = pad(seconds);
+}
+
+/* ============================================================
+   WEEK GRID RENDERER (shared)
+   ============================================================ */
+function renderWeekGrid(weekData, currentWeekIdx, weekIdx, actuals) {
+  const isCurrentWeek = weekIdx === currentWeekIdx;
+  const todayIdx = getTodayDayIndex();
+  const weekNum  = weekData.week;
+  const acts     = (actuals && actuals.activities) || [];
+
+  return weekData.days.map((day, dayIdx) => {
+    const isToday = isCurrentWeek && dayIdx === todayIdx;
+    const isOff   = day.sessions.length === 0;
+
+    const classes = [
+      'day-card',
+      isToday ? 'day-card--today' : '',
+      isOff   ? 'day-card--off'   : '',
+    ].filter(Boolean).join(' ');
+
+    const sessionHTML = isOff
+      ? '<span class="off-label">Rest</span>'
+      : day.sessions.map((s, sessIdx) => {
+          const match = acts.find(a =>
+            a.matched_week    === weekNum &&
+            a.matched_day     === dayIdx  &&
+            a.matched_session === sessIdx
+          );
+          const actualLine = match
+            ? `<div class="session-actual">\u2713 ${fmtDuration(match.duration_sec)}${match.distance_m ? ' \xb7 ' + fmtDistance(match.sport, match.distance_m) : ''}${match.pace ? ' \xb7 ' + match.pace : ''}</div>`
+            : '';
+          return `<span class="session-pill session-pill--${s.sport}">${s.desc}${actualLine}</span>`;
+        }).join('');
+
+    return `
+      <div class="${classes}">
+        <div class="day-card__name">${day.day}</div>
+        ${sessionHTML}
+      </div>`;
+  }).join('');
+}
+
+function fmtDuration(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = Math.floor(sec % 60);
+  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return `${m}:${String(s).padStart(2,'0')}`;
+}
+
+function fmtDistance(sport, meters) {
+  if (sport === 'swim') return `${meters.toLocaleString()}m`;
+  if (sport === 'run')  return `${(meters / 1000).toFixed(2)} km`;
+  if (sport === 'bike') return `${(meters / 1000).toFixed(1)} km`;
+  return `${meters}m`;
+}
+
+/* ============================================================
+   RENDER: Current Week
+   ============================================================ */
+function renderCurrentWeek(currentIdx, actuals) {
+  const w = WEEKS[currentIdx];
+  document.getElementById('current-week-title').textContent = `Current Week: Week ${w.week}; ${w.label}`;
+  document.getElementById('current-week-meta').textContent  = `${w.dateRange} · ${w.hours} hrs`;
+  document.getElementById('week-grid').innerHTML = renderWeekGrid(w, currentIdx, currentIdx, actuals);
+}
+
+/* ============================================================
+   RENDER: Hours Chart
+   ============================================================ */
+function renderHoursChart(currentIdx, actuals) {
+  const maxHours = 14;
+  const acts = (actuals && actuals.activities) || [];
+
+  const phaseGroups = [];
+  let curPhase = null, groupStart = 0;
+  WEEKS.forEach((w, i) => {
+    if (w.phase !== curPhase) {
+      if (curPhase !== null) phaseGroups.push({ phase: curPhase, count: i - groupStart });
+      curPhase = w.phase;
+      groupStart = i;
+    }
+  });
+  phaseGroups.push({ phase: curPhase, count: WEEKS.length - groupStart });
+
+  const phaseRow = phaseGroups.map(g => {
+    const color = PHASE_COLORS[g.phase];
+    return `<div class="chart-phase-cell" style="grid-column:span ${g.count};background:${hexAlpha(color,0.12)};border-top:2px solid ${hexAlpha(color,0.55)};"><span class="chart-phase-label" style="color:${color};">${g.phase}</span></div>`;
+  }).join('');
+
+  const cols = WEEKS.map((w, i) => {
+    const state = i < currentIdx ? 'past' : i === currentIdx ? 'current' : 'future';
+    const wrapClass = state === 'current' ? 'chart-bar-wrap chart-bar-wrap--current'
+                    : state === 'past'    ? 'chart-bar-wrap chart-bar-wrap--past'
+                    : 'chart-bar-wrap';
+
+    const swimH = (w.swimHrs / maxHours * 100).toFixed(1);
+    const bikeH = (w.bikeHrs / maxHours * 100).toFixed(1);
+    const runH  = (w.runHrs  / maxHours * 100).toFixed(1);
+    const totalH = (w.swimHrs + w.bikeHrs + w.runHrs) / maxHours * 100;
+
+    const swimS = w.days.reduce((n, d) => n + d.sessions.filter(s => s.sport === 'swim').length, 0);
+    const bikeS = w.days.reduce((n, d) => n + d.sessions.filter(s => s.sport === 'bike').length, 0);
+    const runS  = w.days.reduce((n, d) => n + d.sessions.filter(s => s.sport === 'run').length, 0);
+
+    // Compute actual hours from matched activities for this week
+    const weekActs = acts.filter(a => a.matched_week === w.week);
+    const actualHrs = weekActs.reduce((sum, a) => sum + a.duration_sec / 3600, 0);
+    const hasActuals = weekActs.length > 0;
+    const actualPct = Math.min(actualHrs / maxHours * 100, totalH);
+    const actualOverflow = actualHrs / maxHours * 100 > totalH;
+
+    const checkBadge = hasActuals ? `<span class="chart-col-check">\u2713</span>` : '';
+    const overlayStyle = hasActuals
+      ? `background:${actualOverflow ? 'rgba(82,183,136,0.25)' : 'rgba(255,255,255,0.12)'};border-top:1px solid ${actualOverflow ? 'rgba(82,183,136,0.6)' : 'rgba(255,255,255,0.25)'};`
+      : '';
+    const overlayHTML = hasActuals
+      ? `<div class="chart-actual-overlay" style="height:${actualPct.toFixed(1)}%;${overlayStyle}"></div>`
+      : '';
+
+    const tip = `W${w.week} · ${w.label} · ${w.hours}h total|Swim: ${w.swimHrs}h · ${swimS} session${swimS !== 1 ? 's' : ''}|Bike: ${w.bikeHrs}h · ${bikeS} session${bikeS !== 1 ? 's' : ''}|Run: ${w.runHrs}h · ${runS} session${runS !== 1 ? 's' : ''}${hasActuals ? `|Actual: ${actualHrs.toFixed(1)}h logged` : ''}`;
+
+    return `
+      <div class="chart-col" style="height:100%;position:relative;" data-tip="${tip}" onclick="scrollToWeek(${i})" onmouseenter="showTip(this)" onmouseleave="hideTip()">
+        ${checkBadge}
+        <span class="chart-week-label">W${w.week}</span>
+        <div class="${wrapClass}" style="height:${totalH.toFixed(1)}%;">
+          <div class="chart-segment chart-segment--run"  style="height:${runH}%;"></div>
+          <div class="chart-segment chart-segment--bike" style="height:${bikeH}%;"></div>
+          <div class="chart-segment chart-segment--swim" style="height:${swimH}%;"></div>
+          ${overlayHTML}
+        </div>
+        <span class="chart-hours-label">${w.hours}h</span>
+      </div>`;
+  }).join('');
+
+  document.getElementById('phase-track').innerHTML = `
+    <div class="hours-chart">
+      <div class="chart-phase-row">${phaseRow}</div>
+      <div class="chart-bars">${cols}</div>
+      <div class="chart-legend">
+        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#0096c7;"></span>Swim</span>
+        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#f4a261;"></span>Bike</span>
+        <span class="chart-legend-item"><span class="chart-legend-dot" style="background:#52b788;"></span>Run</span>
+      </div>
+    </div>`;
+}
+
+/* ============================================================
+   RENDER: Accordion
+   ============================================================ */
+function renderAccordion(currentIdx, actuals) {
+  const lo   = Math.max(0, currentIdx - 1);
+  const hi   = Math.min(WEEKS.length - 1, currentIdx + 1);
+  const acts = (actuals && actuals.activities) || [];
+
+  document.getElementById('accordion').innerHTML = WEEKS.map((w, i) => {
+    const isCurrent = i === currentIdx;
+    const color     = PHASE_COLORS[w.phase];
+    const expanded  = (i >= lo && i <= hi) ? 'expanded' : '';
+
+    // Compute per-sport actual hours for this week
+    const weekActs = acts.filter(a => a.matched_week === w.week);
+    const actSwimHrs = weekActs.filter(a => a.sport === 'swim').reduce((s, a) => s + a.duration_sec / 3600, 0);
+    const actBikeHrs = weekActs.filter(a => a.sport === 'bike').reduce((s, a) => s + a.duration_sec / 3600, 0);
+    const actRunHrs  = weekActs.filter(a => a.sport === 'run' ).reduce((s, a) => s + a.duration_sec / 3600, 0);
+    const hasActuals = weekActs.length > 0;
+
+    const swimChip = hasActuals && actSwimHrs > 0
+      ? `<span class="sport-chip sport-chip--swim">${actSwimHrs.toFixed(1)}h/${w.swimHrs}h</span>`
+      : `<span class="sport-chip sport-chip--swim">${w.swimHrs}h</span>`;
+    const bikeChip = hasActuals && actBikeHrs > 0
+      ? `<span class="sport-chip sport-chip--bike">${actBikeHrs.toFixed(1)}h/${w.bikeHrs}h</span>`
+      : `<span class="sport-chip sport-chip--bike">${w.bikeHrs}h</span>`;
+    const runChip  = hasActuals && actRunHrs > 0
+      ? `<span class="sport-chip sport-chip--run">${actRunHrs.toFixed(1)}h/${w.runHrs}h</span>`
+      : `<span class="sport-chip sport-chip--run">${w.runHrs}h</span>`;
+
+    return `
+      <div class="accordion-item ${isCurrent ? 'accordion-item--current' : ''} ${expanded}" data-week="${i}">
+        <div class="accordion-header" onclick="toggleAccordion(${i})">
+          <span class="accordion-week-num">W${w.week}</span>
+          <div class="accordion-meta">
+            <div class="accordion-label">${w.label}</div>
+            <div class="accordion-dates mono">${w.dateRange}</div>
+          </div>
+          <div class="accordion-sport-strip">
+            ${swimChip}
+            ${bikeChip}
+            ${runChip}
+          </div>
+          <span class="accordion-badge" style="background:${hexAlpha(color,0.12)};color:${color};border-color:${hexAlpha(color,0.35)};">${w.phase}</span>
+          <span class="accordion-hours mono">${w.hours}h</span>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="week-grid">${renderWeekGrid(w, currentIdx, i, actuals)}</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function toggleAccordion(weekIdx) {
+  document.querySelector(`[data-week="${weekIdx}"]`).classList.toggle('expanded');
+}
+
+/* ============================================================
+   RENDER: Zones
+   ============================================================ */
+function renderZones() {
+  const sports = [
+    { key: 'swim', label: 'Swim' },
+    { key: 'bike', label: 'Bike' },
+    { key: 'run',  label: 'Run'  },
+  ];
+
+  document.getElementById('zones-grid').innerHTML = sports.map(({ key, label }) => {
+    const z = ZONES[key];
+    const thHTML = z.cols.map(c => `<th>${c}</th>`).join('');
+
+    const tdHTML = z.rows.map(r => {
+      const cls = r.isRace ? 'race-row' : '';
+      let cells = `<td>${r.zone}</td>`;
+      if (key === 'swim') cells += `<td>${r.pace}</td>`;
+      if (key === 'bike') cells += `<td>${r.hr}</td>`;
+      if (key === 'run')  cells += `<td>${r.pace}</td><td>${r.hr}</td>`;
+      return `<tr class="${cls}">${cells}</tr>`;
+    }).join('');
+
+    return `
+      <div class="zone-card">
+        <div class="zone-card__header" style="border-bottom:2px solid ${hexAlpha(z.color,0.2)};background:${hexAlpha(z.color,0.06)};">
+          <div class="sport-dot" style="background:${z.color};"></div>
+          <span class="zone-card__sport">${label}</span>
+        </div>
+        <table class="zone-table">
+          <thead><tr>${thHTML}</tr></thead>
+          <tbody>${tdHTML}</tbody>
+        </table>
+      </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   RENDER: Race Day Plan
+   ============================================================ */
+function renderRacePlan() {
+  const splitCards = RACE_PLAN.splits.map(s => {
+    const rows = s.rows.map(r =>
+      `<div class="split-row">
+        <span class="split-row__key">${r.key}</span>
+        <span class="split-row__val">${r.val}</span>
+      </div>`
+    ).join('');
+
+    return `
+      <div class="split-card">
+        <div class="split-card__header" style="border-bottom:2px solid ${hexAlpha(s.color,0.28)};background:${hexAlpha(s.color,0.08)};">
+          <div class="sport-dot" style="background:${s.color};"></div>
+          <span class="split-card__sport">${s.label}</span>
+        </div>
+        <div class="split-card__body">${rows}</div>
+      </div>`;
+  }).join('');
+
+  const nutritionItems = RACE_PLAN.nutrition.map(n =>
+    `<li><strong>${n.label}</strong>${n.text}</li>`
+  ).join('');
+
+  document.getElementById('race-plan-content').innerHTML = `
+    <div class="race-splits">${splitCards}</div>
+    <div class="finish-box">
+      <div class="finish-box__label">Projected Finish Time</div>
+      <div class="finish-box__time">${RACE_PLAN.finish.display}</div>
+      <div class="finish-box__breakdown">${RACE_PLAN.finish.breakdown}</div>
+    </div>
+    <div class="nutrition-box">
+      <div class="nutrition-box__title">Nutrition Protocol</div>
+      <ul class="nutrition-list">${nutritionItems}</ul>
+    </div>`;
+}
+
+/* ============================================================
+   CHART INTERACTIONS
+   ============================================================ */
+function scrollToWeek(weekIdx) {
+  const item = document.querySelector(`#accordion [data-week="${weekIdx}"]`);
+  if (!item) return;
+  if (!item.classList.contains('expanded')) item.classList.add('expanded');
+  setTimeout(() => item.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+function showTip(el) {
+  const tip = document.getElementById('chart-tooltip');
+  const lines = el.dataset.tip.split('|');
+  tip.innerHTML = lines.map((l, i) => i === 0 ? `<strong>${l}</strong>` : l).join('<br>');
+  tip.classList.add('visible');
+}
+
+function hideTip() {
+  document.getElementById('chart-tooltip').classList.remove('visible');
+}
+
+function toggleSection(id, btn) {
+  const collapsed = document.getElementById(id).classList.toggle('collapsed');
+  btn.textContent = collapsed ? '▼ Expand' : '▲ Collapse';
+}
+
+/* ============================================================
+   STICKY NAV — IntersectionObserver
+   ============================================================ */
+function initNav() {
+  const links = document.querySelectorAll('.nav__link');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav__link[data-section="${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-35% 0px -60% 0px', threshold: 0 });
+
+  ['week', 'plan', 'week-details', 'zones', 'raceday'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+}
+
+/* ============================================================
+   RENDER: Unmatched activities strip
+   ============================================================ */
+function renderUnmatched(actuals) {
+  const unmatched = (actuals && actuals.unmatched) || [];
+  if (unmatched.length === 0) return;
+
+  const chips = unmatched.map(a => {
+    const d = a.date ? new Date(a.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+    const dur = a.duration_sec ? fmtDuration(a.duration_sec) : '';
+    return `<span class="unmatched-chip">${a.sport} ${d}${dur ? ' \xb7 ' + dur : ''}</span>`;
+  }).join('');
+
+  const strip = document.createElement('div');
+  strip.className = 'unmatched-strip';
+  strip.innerHTML = `<span>${unmatched.length} unmatched activit${unmatched.length === 1 ? 'y' : 'ies'}</span>${chips}`;
+
+  const chart = document.getElementById('phase-track');
+  if (chart) chart.appendChild(strip);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+async function init() {
+  const currentIdx = getCurrentWeekIndex();
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  document.addEventListener('mousemove', e => {
+    const tip = document.getElementById('chart-tooltip');
+    tip.style.left = (e.clientX + 16) + 'px';
+    tip.style.top  = Math.max(8, e.clientY - 44) + 'px';
+  });
+
+  let actuals = { activities: [], unmatched: [] };
+  try {
+    const res = await fetch('actuals.json');
+    if (res.ok) actuals = await res.json();
+  } catch (_) {}
+
+  renderCurrentWeek(currentIdx, actuals);
+  renderHoursChart(currentIdx, actuals);
+  renderAccordion(currentIdx, actuals);
+  renderUnmatched(actuals);
+  renderZones();
+  renderRacePlan();
+  initNav();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
