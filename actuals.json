@@ -1,5 +1,654 @@
 {
-  "generated": null,
+  "generated": "2026-03-09T04:24:28Z",
   "activities": [],
-  "unmatched": []
+  "unmatched": [
+    {
+      "date": "2026-03-08",
+      "sport": "bike",
+      "duration_sec": 7866,
+      "distance_m": 51503,
+      "pace": "23.6 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-07",
+      "sport": "run",
+      "duration_sec": 3795,
+      "distance_m": 9672,
+      "pace": "6:32/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-06",
+      "sport": "run",
+      "duration_sec": 671,
+      "distance_m": 1615,
+      "pace": "6:55/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-06",
+      "sport": "bike",
+      "duration_sec": 3105,
+      "distance_m": 20716,
+      "pace": "24.0 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-05",
+      "sport": "run",
+      "duration_sec": 1825,
+      "distance_m": 5282,
+      "pace": "5:45/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-05",
+      "sport": "bike",
+      "duration_sec": 2842,
+      "distance_m": 19495,
+      "pace": "24.7 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-04",
+      "sport": "run",
+      "duration_sec": 4621,
+      "distance_m": 12118,
+      "pace": "6:21/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-02",
+      "sport": "run",
+      "duration_sec": 1817,
+      "distance_m": 4491,
+      "pace": "6:44/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-03-01",
+      "sport": "bike",
+      "duration_sec": 11451,
+      "distance_m": 71704,
+      "pace": "22.5 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-28",
+      "sport": "run",
+      "duration_sec": 1287,
+      "distance_m": 3030,
+      "pace": "7:04/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-28",
+      "sport": "bike",
+      "duration_sec": 5983,
+      "distance_m": 35468,
+      "pace": "21.3 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-28",
+      "sport": "swim",
+      "duration_sec": 3807,
+      "distance_m": 2025,
+      "pace": "3:08/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-27",
+      "sport": "run",
+      "duration_sec": 645,
+      "distance_m": 1615,
+      "pace": "6:39/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-27",
+      "sport": "bike",
+      "duration_sec": 3601,
+      "distance_m": 22375,
+      "pace": "22.4 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-25",
+      "sport": "run",
+      "duration_sec": 3600,
+      "distance_m": 9656,
+      "pace": "6:12/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-24",
+      "sport": "bike",
+      "duration_sec": 3881,
+      "distance_m": 24458,
+      "pace": "22.7 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-23",
+      "sport": "swim",
+      "duration_sec": 3429,
+      "distance_m": 1450,
+      "pace": "3:56/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-23",
+      "sport": "bike",
+      "duration_sec": 3744,
+      "distance_m": 23326,
+      "pace": "22.4 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-22",
+      "sport": "bike",
+      "duration_sec": 8134,
+      "distance_m": 50985,
+      "pace": "22.6 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-22",
+      "sport": "swim",
+      "duration_sec": 3331,
+      "distance_m": 1950,
+      "pace": "2:50/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "bike",
+      "duration_sec": 3975,
+      "distance_m": 25873,
+      "pace": "23.4 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "swim",
+      "duration_sec": 4012,
+      "distance_m": 2050,
+      "pace": "3:15/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-21",
+      "sport": "bike",
+      "duration_sec": 3548,
+      "distance_m": 22368,
+      "pace": "22.7 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-19",
+      "sport": "swim",
+      "duration_sec": 3440,
+      "distance_m": 2275,
+      "pace": "2:31/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-18",
+      "sport": "run",
+      "duration_sec": 3300,
+      "distance_m": 9656,
+      "pace": "5:41/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-17",
+      "sport": "swim",
+      "duration_sec": 3119,
+      "distance_m": 1475,
+      "pace": "3:31/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "run",
+      "duration_sec": 1806,
+      "distance_m": 4576,
+      "pace": "6:34/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "bike",
+      "duration_sec": 3277,
+      "distance_m": 20155,
+      "pace": "22.1 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-16",
+      "sport": "swim",
+      "duration_sec": 3325,
+      "distance_m": 1550,
+      "pace": "3:34/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-15",
+      "sport": "bike",
+      "duration_sec": 8632,
+      "distance_m": 53489,
+      "pace": "22.3 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "swim",
+      "duration_sec": 3737,
+      "distance_m": 1300,
+      "pace": "4:47/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-14",
+      "sport": "bike",
+      "duration_sec": 1179,
+      "distance_m": 8407,
+      "pace": "25.7 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "swim",
+      "duration_sec": 3867,
+      "distance_m": 1525,
+      "pace": "4:13/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-12",
+      "sport": "bike",
+      "duration_sec": 3840,
+      "distance_m": 26237,
+      "pace": "24.6 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-11",
+      "sport": "run",
+      "duration_sec": 2914,
+      "distance_m": 8076,
+      "pace": "6:00/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "swim",
+      "duration_sec": 3030,
+      "distance_m": 1400,
+      "pace": "3:36/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-10",
+      "sport": "bike",
+      "duration_sec": 3179,
+      "distance_m": 20700,
+      "pace": "23.4 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-09",
+      "sport": "swim",
+      "duration_sec": 3636,
+      "distance_m": 1500,
+      "pace": "4:02/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-08",
+      "sport": "bike",
+      "duration_sec": 4859,
+      "distance_m": 31980,
+      "pace": "23.7 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "bike",
+      "duration_sec": 4728,
+      "distance_m": 31946,
+      "pace": "24.3 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-07",
+      "sport": "bike",
+      "duration_sec": 689,
+      "distance_m": 4644,
+      "pace": "24.3 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-05",
+      "sport": "swim",
+      "duration_sec": 3345,
+      "distance_m": 1750,
+      "pace": "3:11/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-04",
+      "sport": "run",
+      "duration_sec": 3311,
+      "distance_m": 9751,
+      "pace": "5:39/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-03",
+      "sport": "other",
+      "duration_sec": 3600,
+      "distance_m": 22530,
+      "pace": null,
+      "note": "Unrecognized type: other"
+    },
+    {
+      "date": "2026-02-02",
+      "sport": "run",
+      "duration_sec": 3604,
+      "distance_m": 8647,
+      "pace": "6:56/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-02-01",
+      "sport": "bike",
+      "duration_sec": 3600,
+      "distance_m": 22530,
+      "pace": "22.5 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-29",
+      "sport": "swim",
+      "duration_sec": 3840,
+      "distance_m": 2100,
+      "pace": "3:02/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-28",
+      "sport": "run",
+      "duration_sec": 3724,
+      "distance_m": 4936,
+      "pace": "12:34/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-27",
+      "sport": "bike",
+      "duration_sec": 4028,
+      "distance_m": 0,
+      "pace": null,
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-25",
+      "sport": "bike",
+      "duration_sec": 3724,
+      "distance_m": 0,
+      "pace": null,
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-23",
+      "sport": "bike",
+      "duration_sec": 3245,
+      "distance_m": 21009,
+      "pace": "23.3 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-21",
+      "sport": "run",
+      "duration_sec": 2967,
+      "distance_m": 8049,
+      "pace": "6:08/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-20",
+      "sport": "swim",
+      "duration_sec": 2026,
+      "distance_m": 1075,
+      "pace": "3:08/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-20",
+      "sport": "swim",
+      "duration_sec": 1167,
+      "distance_m": 2675,
+      "pace": "0:43/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-19",
+      "sport": "bike",
+      "duration_sec": 6276,
+      "distance_m": 38258,
+      "pace": "21.9 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-17",
+      "sport": "bike",
+      "duration_sec": 5288,
+      "distance_m": 30388,
+      "pace": "20.7 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-16",
+      "sport": "run",
+      "duration_sec": 3129,
+      "distance_m": 8052,
+      "pace": "6:28/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-14",
+      "sport": "run",
+      "duration_sec": 2719,
+      "distance_m": 8050,
+      "pace": "5:37/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-13",
+      "sport": "swim",
+      "duration_sec": 3507,
+      "distance_m": 1875,
+      "pace": "3:07/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-12",
+      "sport": "run",
+      "duration_sec": 3600,
+      "distance_m": 8910,
+      "pace": "6:44/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-11",
+      "sport": "other",
+      "duration_sec": 6300,
+      "distance_m": 28968,
+      "pace": null,
+      "note": "Unrecognized type: other"
+    },
+    {
+      "date": "2026-01-10",
+      "sport": "swim",
+      "duration_sec": 1629,
+      "distance_m": 875,
+      "pace": "3:06/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-10",
+      "sport": "swim",
+      "duration_sec": 942,
+      "distance_m": 150,
+      "pace": "10:28/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-09",
+      "sport": "bike",
+      "duration_sec": 2805,
+      "distance_m": 17208,
+      "pace": "22.1 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-07",
+      "sport": "run",
+      "duration_sec": 2834,
+      "distance_m": 8046,
+      "pace": "5:52/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-06",
+      "sport": "bike",
+      "duration_sec": 2276,
+      "distance_m": 14713,
+      "pace": "23.3 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-05",
+      "sport": "swim",
+      "duration_sec": 3000,
+      "distance_m": 1500,
+      "pace": "3:20/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-04",
+      "sport": "bike",
+      "duration_sec": 2700,
+      "distance_m": 12874,
+      "pace": "17.2 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-03",
+      "sport": "run",
+      "duration_sec": 2701,
+      "distance_m": 6988,
+      "pace": "6:26/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-01-02",
+      "sport": "swim",
+      "duration_sec": 3424,
+      "distance_m": 1575,
+      "pace": "3:37/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-31",
+      "sport": "run",
+      "duration_sec": 1992,
+      "distance_m": 5639,
+      "pace": "5:53/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-30",
+      "sport": "bike",
+      "duration_sec": 2716,
+      "distance_m": 0,
+      "pace": null,
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-30",
+      "sport": "bike",
+      "duration_sec": 832,
+      "distance_m": 3453,
+      "pace": "14.9 km/h",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-26",
+      "sport": "bike",
+      "duration_sec": 1806,
+      "distance_m": 0,
+      "pace": null,
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-25",
+      "sport": "run",
+      "duration_sec": 1805,
+      "distance_m": 4863,
+      "pace": "6:11/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-24",
+      "sport": "mobility",
+      "duration_sec": 563,
+      "distance_m": 0,
+      "pace": null,
+      "note": "Unrecognized type: mobility"
+    },
+    {
+      "date": "2025-12-24",
+      "sport": "bike",
+      "duration_sec": 902,
+      "distance_m": 0,
+      "pace": null,
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-22",
+      "sport": "swim",
+      "duration_sec": 3127,
+      "distance_m": 1450,
+      "pace": "3:35/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-21",
+      "sport": "swim",
+      "duration_sec": 2399,
+      "distance_m": 850,
+      "pace": "4:42/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-14",
+      "sport": "run",
+      "duration_sec": 6839,
+      "distance_m": 21380,
+      "pace": "5:19/km",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2025-12-10",
+      "sport": "run",
+      "duration_sec": 2173,
+      "distance_m": 5784,
+      "pace": "6:15/km",
+      "note": "Outside plan date range"
+    }
+  ]
 }
