@@ -254,13 +254,15 @@ def main():
         except ValueError:
             continue
 
-        # For swim, use movingDuration (active swim time, no rest) to match Garmin average pace
-        moving_duration_sec = act.get('movingDuration', 0) or 0
-        pace_duration = moving_duration_sec if (sport == 'swim' and moving_duration_sec > 0) else duration_sec
-        pace = compute_pace(sport, pace_duration, distance_m) if sport else None
-        if sport == 'swim':
-            swim_keys = {k: act[k] for k in act if any(x in k.lower() for x in ["dur","pace","speed","swim","moving"])}
-            print(f"DEBUG swim: {swim_keys}")
+        # For swim, use averageSpeed from Garmin (matches Garmin's own pace display, movement time only)
+        avg_speed = act.get('averageSpeed', 0) or 0
+        if sport == 'swim' and avg_speed > 0:
+            secs_per_100m = 100 / avg_speed
+            m = int(secs_per_100m // 60)
+            s = int(secs_per_100m % 60)
+            pace = f'{m}:{s:02d}/100m'
+        else:
+            pace = compute_pace(sport, duration_sec, distance_m) if sport else None
 
         base = {
             'date':         activity_date.isoformat(),
