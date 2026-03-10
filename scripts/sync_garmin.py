@@ -258,6 +258,9 @@ def main():
         moving_duration_sec = act.get('movingDuration', 0) or 0
         pace_duration = moving_duration_sec if (sport == 'swim' and moving_duration_sec > 0) else duration_sec
         pace = compute_pace(sport, pace_duration, distance_m) if sport else None
+        if sport == 'swim':
+            swim_keys = {k: act[k] for k in act if any(x in k.lower() for x in ["dur","pace","speed","swim","moving"])}
+            print(f"DEBUG swim: {swim_keys}")
 
         base = {
             'date':         activity_date.isoformat(),
