@@ -1,6 +1,16 @@
 {
-  "generated": "2026-03-11T07:57:41Z",
+  "generated": "2026-03-12T07:59:03Z",
   "activities": [
+    {
+      "date": "2026-03-11",
+      "sport": "run",
+      "duration_sec": 3403,
+      "distance_m": 9658,
+      "pace": "5:52/km",
+      "matched_week": 1,
+      "matched_day": 2,
+      "matched_session": 0
+    },
     {
       "date": "2026-03-10",
       "sport": "bike",
