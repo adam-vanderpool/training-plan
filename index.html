@@ -1154,12 +1154,12 @@ function getCurrentWeekIndex() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   for (let i = 0; i < WEEKS.length; i++) {
-    const start = new Date(WEEKS[i].startDate);
+    const start = new Date(WEEKS[i].startDate + 'T00:00:00');
     const end = new Date(start);
     end.setDate(end.getDate() + 6);
     if (today >= start && today <= end) return i;
   }
-  return today < new Date(WEEKS[0].startDate) ? 0 : WEEKS.length - 1;
+  return today < new Date(WEEKS[0].startDate + 'T00:00:00') ? 0 : WEEKS.length - 1;
 }
 
 function getTodayDayIndex() {
@@ -1241,8 +1241,8 @@ function fmtDuration(sec) {
 
 function fmtDistance(sport, meters) {
   if (sport === 'swim') return `${meters.toLocaleString()}m`;
-  if (sport === 'run')  return `${(meters / 1000).toFixed(2)} km`;
-  if (sport === 'bike') return `${(meters / 1000).toFixed(1)} km`;
+  if (sport === 'run')  return `${(meters / 1609.344).toFixed(2)} mi`;
+  if (sport === 'bike') return `${(meters / 1609.344).toFixed(1)} mi`;
   return `${meters}m`;
 }
 
