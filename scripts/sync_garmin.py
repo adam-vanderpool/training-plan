@@ -203,13 +203,13 @@ def compute_pace(sport, duration_sec, distance_m):
         s = int(secs_per_100m % 60)
         return f'{m}:{s:02d}/100m'
     if sport == 'run':
-        secs_per_km = duration_sec * 1000 / distance_m
-        m = int(secs_per_km // 60)
-        s = int(secs_per_km % 60)
-        return f'{m}:{s:02d}/km'
+        secs_per_mile = duration_sec * 1609.344 / distance_m
+        m = int(secs_per_mile // 60)
+        s = int(secs_per_mile % 60)
+        return f'{m}:{s:02d}/mi'
     if sport == 'bike':
-        kmh = distance_m / duration_sec * 3.6
-        return f'{kmh:.1f} km/h'
+        mph = distance_m / duration_sec * 2.23694
+        return f'{mph:.1f} mph'
     return None
 
 
