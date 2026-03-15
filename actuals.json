@@ -1,12 +1,12 @@
 {
-  "generated": "2026-03-15T07:55:50Z",
+  "generated": "2026-03-15T12:26:24Z",
   "activities": [
     {
       "date": "2026-03-11",
       "sport": "run",
       "duration_sec": 3403,
       "distance_m": 9658,
-      "pace": "5:52/km",
+      "pace": "9:27/mi",
       "matched_week": 1,
       "matched_day": 2,
       "matched_session": 0
@@ -16,7 +16,7 @@
       "sport": "bike",
       "duration_sec": 5815,
       "distance_m": 39088,
-      "pace": "24.2 km/h",
+      "pace": "15.0 mph",
       "matched_week": 1,
       "matched_day": 1,
       "matched_session": 0
@@ -38,7 +38,7 @@
       "sport": "bike",
       "duration_sec": 9128,
       "distance_m": 60476,
-      "pace": "23.9 km/h",
+      "pace": "14.8 mph",
       "note": "No planned session this day"
     },
     {
