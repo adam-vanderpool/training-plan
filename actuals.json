@@ -1,6 +1,16 @@
 {
-  "generated": "2026-03-15T12:26:24Z",
+  "generated": "2026-03-16T09:17:15Z",
   "activities": [
+    {
+      "date": "2026-03-15",
+      "sport": "run",
+      "duration_sec": 3919,
+      "distance_m": 10071,
+      "pace": "10:26/mi",
+      "matched_week": 1,
+      "matched_day": 6,
+      "matched_session": 1
+    },
     {
       "date": "2026-03-11",
       "sport": "run",
@@ -33,6 +43,14 @@
     }
   ],
   "unmatched": [
+    {
+      "date": "2026-03-15",
+      "sport": "swim",
+      "duration_sec": 3340,
+      "distance_m": 1800,
+      "pace": "2:14/100m",
+      "note": "No planned session this day"
+    },
     {
       "date": "2026-03-14",
       "sport": "bike",
