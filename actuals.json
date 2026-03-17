@@ -1,6 +1,16 @@
 {
-  "generated": "2026-03-16T09:17:15Z",
+  "generated": "2026-03-17T08:06:03Z",
   "activities": [
+    {
+      "date": "2026-03-16",
+      "sport": "swim",
+      "duration_sec": 3369,
+      "distance_m": 2050,
+      "pace": "2:14/100m",
+      "matched_week": 2,
+      "matched_day": 0,
+      "matched_session": 0
+    },
     {
       "date": "2026-03-15",
       "sport": "run",
