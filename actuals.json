@@ -1,6 +1,56 @@
 {
-  "generated": "2026-03-17T08:06:03Z",
+  "generated": "2026-04-03T08:35:45Z",
   "activities": [
+    {
+      "date": "2026-03-29",
+      "sport": "run",
+      "duration_sec": 1264,
+      "distance_m": 3228,
+      "pace": "10:30/mi",
+      "matched_week": 3,
+      "matched_day": 6,
+      "matched_session": 0
+    },
+    {
+      "date": "2026-03-28",
+      "sport": "bike",
+      "duration_sec": 4044,
+      "distance_m": 22659,
+      "pace": "12.5 mph",
+      "matched_week": 3,
+      "matched_day": 5,
+      "matched_session": 0
+    },
+    {
+      "date": "2026-03-24",
+      "sport": "bike",
+      "duration_sec": 6755,
+      "distance_m": 44665,
+      "pace": "14.8 mph",
+      "matched_week": 3,
+      "matched_day": 1,
+      "matched_session": 0
+    },
+    {
+      "date": "2026-03-23",
+      "sport": "swim",
+      "duration_sec": 3108,
+      "distance_m": 1450,
+      "pace": "2:21/100m",
+      "matched_week": 3,
+      "matched_day": 0,
+      "matched_session": 0
+    },
+    {
+      "date": "2026-03-22",
+      "sport": "run",
+      "duration_sec": 2130,
+      "distance_m": 5772,
+      "pace": "9:54/mi",
+      "matched_week": 2,
+      "matched_day": 6,
+      "matched_session": 0
+    },
     {
       "date": "2026-03-16",
       "sport": "swim",
@@ -53,6 +103,78 @@
     }
   ],
   "unmatched": [
+    {
+      "date": "2026-03-31",
+      "sport": "swim",
+      "duration_sec": 3218,
+      "distance_m": 1450,
+      "pace": "2:04/100m",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-30",
+      "sport": "bike",
+      "duration_sec": 3032,
+      "distance_m": 17755,
+      "pace": "13.1 mph",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-27",
+      "sport": "run",
+      "duration_sec": 939,
+      "distance_m": 2375,
+      "pace": "10:36/mi",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-25",
+      "sport": "bike",
+      "duration_sec": 2940,
+      "distance_m": 18736,
+      "pace": "14.3 mph",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-25",
+      "sport": "swim",
+      "duration_sec": 2453,
+      "distance_m": 1350,
+      "pace": "2:15/100m",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-22",
+      "sport": "bike",
+      "duration_sec": 4551,
+      "distance_m": 28367,
+      "pace": "13.9 mph",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-19",
+      "sport": "run",
+      "duration_sec": 2836,
+      "distance_m": 8142,
+      "pace": "9:20/mi",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "bike",
+      "duration_sec": 6338,
+      "distance_m": 39284,
+      "pace": "13.9 mph",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-03-17",
+      "sport": "run",
+      "duration_sec": 4565,
+      "distance_m": 11272,
+      "pace": "10:51/mi",
+      "note": "No planned session this day"
+    },
     {
       "date": "2026-03-15",
       "sport": "swim",
