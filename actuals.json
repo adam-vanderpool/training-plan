@@ -1,6 +1,56 @@
 {
-  "generated": "2026-04-03T08:35:45Z",
+  "generated": "2026-04-12T07:00:24Z",
   "activities": [
+    {
+      "date": "2026-04-11",
+      "sport": "run",
+      "duration_sec": 1468,
+      "distance_m": 3221,
+      "pace": "12:13/mi",
+      "matched_week": 5,
+      "matched_day": 5,
+      "matched_session": 1
+    },
+    {
+      "date": "2026-04-11",
+      "sport": "bike",
+      "duration_sec": 2383,
+      "distance_m": 14429,
+      "pace": "13.5 mph",
+      "matched_week": 5,
+      "matched_day": 5,
+      "matched_session": 0
+    },
+    {
+      "date": "2026-04-09",
+      "sport": "swim",
+      "duration_sec": 3340,
+      "distance_m": 2050,
+      "pace": "2:32/100m",
+      "matched_week": 5,
+      "matched_day": 3,
+      "matched_session": 0
+    },
+    {
+      "date": "2026-04-08",
+      "sport": "run",
+      "duration_sec": 3017,
+      "distance_m": 8121,
+      "pace": "9:57/mi",
+      "matched_week": 5,
+      "matched_day": 2,
+      "matched_session": 0
+    },
+    {
+      "date": "2026-04-01",
+      "sport": "run",
+      "duration_sec": 1782,
+      "distance_m": 5028,
+      "pace": "9:30/mi",
+      "matched_week": 4,
+      "matched_day": 2,
+      "matched_session": 0
+    },
     {
       "date": "2026-03-29",
       "sport": "run",
@@ -103,6 +153,46 @@
     }
   ],
   "unmatched": [
+    {
+      "date": "2026-04-11",
+      "sport": "swim",
+      "duration_sec": 3483,
+      "distance_m": 1750,
+      "pace": "2:27/100m",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-04-07",
+      "sport": "swim",
+      "duration_sec": 3284,
+      "distance_m": 1950,
+      "pace": "2:29/100m",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-04-06",
+      "sport": "run",
+      "duration_sec": 311,
+      "distance_m": 832,
+      "pace": "10:01/mi",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-04-06",
+      "sport": "bike",
+      "duration_sec": 5728,
+      "distance_m": 32824,
+      "pace": "12.8 mph",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-04-05",
+      "sport": "bike",
+      "duration_sec": 2697,
+      "distance_m": 16430,
+      "pace": "13.6 mph",
+      "note": "No planned session this day"
+    },
     {
       "date": "2026-03-31",
       "sport": "swim",
