@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-30T08:11:39Z",
+  "generated": "2026-05-31T08:30:47Z",
   "activities": [
     {
       "date": "2026-05-18",
@@ -183,6 +183,22 @@
     }
   ],
   "unmatched": [
+    {
+      "date": "2026-05-30",
+      "sport": "swim",
+      "duration_sec": 3556,
+      "distance_m": 1831,
+      "pace": "3:14/100m",
+      "note": "No planned session this day"
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "bike",
+      "duration_sec": 10906,
+      "distance_m": 72858,
+      "pace": "14.9 mph",
+      "note": "No planned session this day"
+    },
     {
       "date": "2026-05-23",
       "sport": "swim",
