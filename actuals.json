@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-02T08:36:23Z",
+  "generated": "2026-07-03T08:41:31Z",
   "activities": [
     {
       "date": "2026-05-18",
@@ -183,6 +183,30 @@
     }
   ],
   "unmatched": [
+    {
+      "date": "2026-07-02",
+      "sport": "swim",
+      "duration_sec": 66,
+      "distance_m": 50,
+      "pace": "1:59/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-07-02",
+      "sport": "swim",
+      "duration_sec": 135,
+      "distance_m": 100,
+      "pace": "2:04/100m",
+      "note": "Outside plan date range"
+    },
+    {
+      "date": "2026-07-02",
+      "sport": "swim",
+      "duration_sec": 2479,
+      "distance_m": 1550,
+      "pace": "1:31/100m",
+      "note": "Outside plan date range"
+    },
     {
       "date": "2026-06-29",
       "sport": "swim",
