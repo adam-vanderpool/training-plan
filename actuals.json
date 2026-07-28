@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-27T09:00:13Z",
+  "generated": "2026-07-28T08:08:05Z",
   "activities": [
     {
       "date": "2026-05-18",
@@ -183,6 +183,14 @@
     }
   ],
   "unmatched": [
+    {
+      "date": "2026-07-27",
+      "sport": "swim",
+      "duration_sec": 3467,
+      "distance_m": 2000,
+      "pace": "2:40/100m",
+      "note": "Outside plan date range"
+    },
     {
       "date": "2026-07-26",
       "sport": "bike",
